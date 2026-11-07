@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, "Ubuntu";
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.ff {
+  font-family: "Oswald", Sans-serif;
+}
+
+.better-tracking {
+  letter-spacing: 10px;
+}
+
+.w-card {
+  width: 353.33px;
+  height: 544.39px;
+}
+
+
+/* Accessibility Styles */
+
+html.high-contrast {
+  filter: contrast(150%) brightness(100%);
+}
+
+html.large-text {
+  font-size: 1.2rem;
+}
+
+html.wide-spacing {
+  letter-spacing: 0.1em;
+  line-height: 1.6;
+}
+
+html.grayscale {
+  filter: grayscale(100%);
+}
