@@ -2,27 +2,98 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, "Ubuntu";
-}
-
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #b39556;
+  color: #0d0c0a;
 }
 
 .ff {
-  font-family: "Oswald", Sans-serif;
+  font-family: var(--font-display), "Arial Narrow", sans-serif;
 }
 
 .better-tracking {
   letter-spacing: 10px;
 }
 
-.w-card {
-  width: 353.33px;
-  height: 544.39px;
+/* Rótulo pequeno em caixa alta, usado acima dos títulos */
+.eyebrow {
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
 }
 
+/* Galeria com rolagem horizontal nativa */
+.snap-gallery {
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.snap-gallery::-webkit-scrollbar {
+  display: none;
+}
+.snap-gallery > * {
+  scroll-snap-align: start;
+}
+
+/* Moldura de foto pendente (ônibus, alojamentos) */
+.photo-pending {
+  background-color: #171512;
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(179, 149, 86, 0.12) 0 1px,
+    transparent 1px 14px
+  );
+}
+
+/* Preloader: escondido nas visitas seguintes e, por segurança, some sozinho se o JS falhar */
+html.skip-preloader .preloader {
+  display: none;
+}
+.preloader {
+  animation: preloader-failsafe 0s linear 5s forwards;
+}
+@keyframes preloader-failsafe {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* Frase gigante. Sem animação ela quebra linha normalmente;
+   com animação vira uma linha só que corre na horizontal. */
+.marquee {
+  position: relative;
+  padding: 7rem 0 5rem;
+}
+.marquee-track {
+  font-size: clamp(3.5rem, 12vw, 9rem);
+  line-height: 0.9;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .marquee {
+    height: 100svh;
+    padding: 0;
+  }
+  .marquee-track {
+    white-space: nowrap;
+    font-size: min(30vh, 24vw);
+    line-height: 1;
+  }
+}
+
+/* Indicador de seção (canto inferior esquerdo) */
+.section-dot {
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.3s;
+}
 
 /* Accessibility Styles */
 

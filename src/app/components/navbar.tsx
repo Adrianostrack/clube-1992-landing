@@ -1,126 +1,125 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import Button from "./button";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { whatsapp } from "../data/club";
+
+const links = [
+  { href: "/home#clube", label: "O clube" },
+  { href: "/home#cabanas", label: "Cabanas" },
+  { href: "/home#estrutura", label: "Estrutura" },
+  { href: "/home#futebol", label: "Futebol" },
+  { href: "/transparency", label: "Transparência" },
+];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/home" || pathname === "/home/" || pathname === "/";
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+  }, [isOpen]);
+
+  const solid = scrolled || !isHome || isOpen;
 
   return (
-    <nav className="border-1992 border-b-4 h-32 w-full">
-      <div className="flex items-center justify-between px-10 xl:px-28">
-        <div className="logo">
-          <Image
-            className="relative top-7 z-10"
-            src="/img/icons/icon.png"
-            width={110}
-            height={110}
-            alt="Logo"
-          />
-        </div>
+    <>
+      <header
+        className={`fixed inset-x-0 top-0 z-40 transition-colors duration-300 ${
+          solid
+            ? "bg-ink/95 backdrop-blur border-b border-white/10"
+            : "bg-transparent border-b border-transparent"
+        }`}
+      >
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 md:px-8">
+          <Link href="/home" className="flex items-center gap-3" aria-label="Clube 1992, início">
+            <Image
+              src="/img/icons/icon.png"
+              width={40}
+              height={52}
+              alt=""
+              priority
+            />
+            <span className="font-display text-2xl font-extrabold uppercase tracking-wide">
+              Clube 1992
+            </span>
+          </Link>
 
-        <div className="lg:hidden z-40">
+          <nav className="hidden lg:flex items-center gap-8 text-sm font-medium">
+            {links.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="text-bone/80 hover:text-gold transition-colors"
+              >
+                {l.label}
+              </Link>
+            ))}
+            <a
+              href={whatsapp("Olá! Quero saber como me associar ao Clube 1992.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-gold px-5 py-2.5 font-semibold text-ink hover:bg-bone transition-colors"
+            >
+              Associe-se
+            </a>
+          </nav>
+
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="text-white focus:outline-none"
+            className="lg:hidden -mr-2 p-2 text-bone"
+            aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={isOpen}
           >
-            <svg
-              className="w-6 h-6 text-1992"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+            <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d={
-                  isOpen
-                    ? "M6 18L18 6M6 6l12 12"
-                    : "M4 6h16M4 12h16m-7 6h7m-16 0h9"
-                }
-              ></path>
+                strokeWidth="1.8"
+                d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 8h16M4 16h16"}
+              />
             </svg>
           </button>
         </div>
+      </header>
 
-        <div className="hidden lg:flex text-lg gap-7 uppercase lg:flex-wrap justify-center lg:justify-start">
-          <Link className="hover:text-1992" href="/home">
-            Home
-          </Link>
-          <Link className="hover:text-1992" href="/home/#structure">
-            Estrutura
-          </Link>
-          <Link className="hover:text-1992" href="/home/#1992">
-            O Clube
-          </Link>
-          <Link className="hover:text-1992" href="/transparency">
-            Transparência
-          </Link>
-          <Link className="hover:text-1992" href="/team">
-            Futebol
-          </Link>
-        </div>
-
-        <div className="hidden lg:flex justify-center w-auto">
-          <Button
-            text="Associe-se"
-            href="https://wa.me/555496518434"
-          />
-        </div>
-
-        <div
-          className={`fixed  inset-0 bg-black bg-opacity-90 flex flex-col items-center justify-center z-20 transform transition-transform duration-300 ease-in-out ${
-            isOpen ? "translate-y-0" : "-translate-y-full"
+      {/* Fora do <header>: o backdrop-blur dele prenderia o position:fixed */}
+      <div
+          className={`lg:hidden fixed inset-x-0 top-20 bottom-0 z-40 overflow-y-auto bg-ink transition-opacity duration-200 ${
+            isOpen ? "opacity-100" : "pointer-events-none opacity-0"
           }`}
         >
-          <div className="flex flex-col items-center gap-8 text-2xl uppercase ">
-            <Link
-              className="hover:text-1992"
-              href="/#home"
-              onClick={() => setIsOpen(false)}
+          <nav className="flex flex-col px-5 pt-6">
+            {links.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                onClick={() => setIsOpen(false)}
+                className="border-b border-white/10 py-4 font-display text-4xl font-extrabold uppercase"
+              >
+                {l.label}
+              </Link>
+            ))}
+            <a
+              href={whatsapp("Olá! Quero saber como me associar ao Clube 1992.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-8 rounded-full bg-gold py-4 text-center font-semibold text-ink"
             >
-              Home
-            </Link>
-            <Link
-              className="hover:text-1992"
-              href="/home/#structure"
-              onClick={() => setIsOpen(false)}
-            >
-              Estrutura
-            </Link>
-            <Link
-              className="hover:text-1992"
-              href="/home/#1992"
-              onClick={() => setIsOpen(false)}
-            >
-              O Clube
-            </Link>
-            <Link
-              className="hover:text-1992"
-              href="/transparency"
-              onClick={() => setIsOpen(false)}
-            >
-              Transparencia
-            </Link>
-            <Link
-              className="hover:text-1992"
-              href="/team"
-              onClick={() => setIsOpen(false)}
-            >
-              Futebol
-            </Link>
-          </div>
-          <div className="mt-10">
-            <Button
-              text="Associe-se"
-              href="https://wa.me/555496518434"
-            />
-          </div>
+              Associe-se pelo WhatsApp
+            </a>
+          </nav>
         </div>
-      </div>
-    </nav>
+      {!isHome && <div className="h-20" aria-hidden />}
+    </>
   );
 }

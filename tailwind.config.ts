@@ -6,8 +6,23 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: ["high-contrast", "large-text"],
   theme: {
     extend: {
+      fontFamily: {
+        display: ["var(--font-display)", "Arial Narrow", "sans-serif"],
+        sans: ["var(--font-body)", "Arial", "sans-serif"],
+      },
+      colors: {
+        ink: "#0d0c0a",
+        coal: "#171512",
+        bone: "#f2ede4",
+        gold: {
+          DEFAULT: "#b39556",
+          deep: "#9b834c",
+          dark: "#6a4d29",
+        },
+      },
       textColor: {
         "1992": "#9b834c",
         "silver-100": "#808080",
@@ -20,21 +35,6 @@ const config: Config = {
       backgroundColor: {
         "1992": "#9b834c",
       },
-      height: {
-        "89": "89vh",
-        "83": "83vw",
-        "34": "34Vw",
-        "27": "27vw",
-      },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
-      safelist: [
-        'high-contrast',
-        'large-text',
-      ],
     },
   },
   plugins: [],
