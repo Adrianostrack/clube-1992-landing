@@ -68,39 +68,72 @@ export const cabanas: Cabana[] = [
   },
 ];
 
-// Hospedagem: preencha os campos null quando o clube confirmar.
-// Campos null não aparecem no site.
-export const hospedagem: {
-  precoAPartirDe: number | null; // ex.: 180 -> "a partir de R$ 180 por noite"
-  checkin: string | null; // ex.: "a partir das 14h"
-  checkout: string | null; // ex.: "até as 12h"
-  cancelamento: string | null; // ex.: "grátis até 48h antes da chegada"
-} = {
-  precoAPartirDe: null,
-  checkin: null,
-  checkout: null,
-  cancelamento: null,
+// Hospedagem: padrão definido em "Cabanas Clube 1992 — Padrão Airbnb + Site" (10/11/2026).
+// Regra de ouro: capacidade, preço e regras iguais no Airbnb e no site.
+export const FRASE_BASE =
+  "Cabanas dentro do Clube 1992, em Carazinho, com piscina e academia para hóspedes.";
+
+export const DESCRICAO_BASE =
+  "Cabana de madeira dentro do Clube 1992, em Carazinho (RS). Você usa a piscina (de novembro a março) e a academia durante a estadia, além dos quiosques e da área de churrasco do clube. A cabana tem cama confortável, ar-condicionado, Smart TV, Wi‑Fi, kit de toalhas e estacionamento gratuito e seguro. Banheiro privativo e cozinha com utensílios básicos. Ideal para casais.";
+
+export const hospedagem = {
+  diaria1: 150, // 1 pessoa, todos os dias, igual nas 5 cabanas
+  diaria2: 200, // 2 pessoas
+  precoAPartirDe: 150 as number | null,
 };
 
-// Regras que já constam nos anúncios das cinco cabanas
-export const regrasFixas = [
-  { rotulo: "Hóspedes", valor: "Até 2 pessoas por cabana" },
-  { rotulo: "Animais", valor: "Não são permitidos animais de estimação" },
+export const regrasHospedagem = [
+  {
+    rotulo: "Capacidade",
+    valor:
+      "Cada cabana comporta 2 pessoas. Famílias podem acrescentar colchão no chão para até 2 crianças, sem custo extra.",
+  },
+  {
+    rotulo: "Diária",
+    valor: "R$ 150 para 1 pessoa e R$ 200 para 2 pessoas, todos os dias, igual nas 5 cabanas.",
+  },
+  { rotulo: "Check-in", valor: "A partir das 14h." },
+  { rotulo: "Check-out", valor: "Até as 12h." },
+  { rotulo: "Estadia mínima", valor: "1 noite, todos os dias." },
+  {
+    rotulo: "Pagamento",
+    valor:
+      "Valor integral para reservar, sem sinal. Pix ou cartão na secretaria do clube. Quem mora fora de Carazinho paga por Pix e envia o comprovante pelo WhatsApp.",
+  },
+  { rotulo: "Cancelamento", valor: "Sem reembolso após o pagamento da reserva." },
+  { rotulo: "Animais", valor: "Aceitamos animais de estimação." },
 ];
+
+export const TEXTO_PISCINA_ACADEMIA =
+  "Durante a estadia, você usa a piscina (de novembro a março, das 9h às 12h30 e das 13h30 às 18h30) e a academia (segunda a sexta, das 6h às 22h; sábado, das 9h às 17h; fechada aos domingos). Pedimos que respeite os horários e as regras de cada área.";
+
+export const horariosAreas = [
+  { area: "Piscina", quando: "Das 9h às 12h30 e das 13h30 às 18h30", obs: "Temporada de verão, de novembro a março" },
+  { area: "Academia", quando: "Segunda a sexta, das 6h às 22h", obs: "Aberta para hóspedes e sócios" },
+  { area: "Academia", quando: "Sábado, das 9h às 17h", obs: "Fechada aos domingos" },
+];
+
+// Código de origem nas mensagens do WhatsApp (o Kommo preenche o campo Origem com ele)
+export type Origem = "SITE" | "GADS" | "IG";
+export const mensagemReserva = (origem: Origem, cabana?: number) =>
+  cabana
+    ? `Olá! Quero reservar a Cabana ${cabana}. Código: ${origem}-C${cabana}`
+    : `Olá! Quero saber qual cabana está disponível. Código: ${origem}-GERAL`;
 
 export const formatPreco = (v: number) =>
   v.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
 
 export const cabanaAmenities = [
-  "Até 2 hóspedes",
-  "Cama de casal",
+  "2 hóspedes + 2 crianças no colchão",
+  "Cama confortável",
   "Banheiro privativo",
-  "Cozinha equipada",
+  "Cozinha com utensílios",
   "Wi‑Fi",
   "Ar-condicionado",
   "Smart TV",
-  "Toalhas inclusas",
-  "Estacionamento",
+  "Kit de toalhas",
+  "Estacionamento gratuito",
+  "Aceita animais",
 ];
 
 export const FGF_URL = "https://fgf.com.br";

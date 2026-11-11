@@ -2,6 +2,7 @@
 import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
+import { detectarOrigem } from "./reservarLink";
 
 // Google Analytics 4 / Google Ads (gtag) e Pixel da Meta.
 // Só carregam se os IDs estiverem configurados na Vercel:
@@ -17,6 +18,11 @@ type Win = Window & {
 
 export default function Analytics() {
   const pathname = usePathname();
+
+  // Registra a origem da visita (SITE/GADS/IG) já na primeira página
+  useEffect(() => {
+    detectarOrigem();
+  }, []);
 
   // Navegação entre páginas sem recarregar: avisa o Pixel
   useEffect(() => {

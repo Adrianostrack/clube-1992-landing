@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Photo from "../components/photo";
+import ReservarLink from "../components/reservarLink";
 import HomeMotion from "../components/motion/homeMotion";
 import Diretoria from "../components/diretoria";
 import {
@@ -9,7 +10,10 @@ import {
   ESTADIO_MATERIA_URL,
   alojamentoItens,
   alojamentos,
+  FRASE_BASE,
   cabanas,
+  formatPreco,
+  hospedagem,
   estadioFatos,
   estadioFotos,
   teamStructure,
@@ -154,7 +158,7 @@ export default function Home() {
               </div>
               <div>
                 <dt className="eyebrow text-ink/50">Piscina</dt>
-                <dd className="mt-2 text-sm leading-snug">Liberada para hóspedes no verão</dd>
+                <dd className="mt-2 text-sm leading-snug">Liberada para hóspedes de novembro a março</dd>
               </div>
               <div>
                 <dt className="eyebrow text-ink/50">Academia</dt>
@@ -205,12 +209,19 @@ export default function Home() {
               </h2>
             </div>
             <p data-fade className="text-bone/70 leading-relaxed md:col-span-5">
-              Cinco cabanas para até 2 pessoas, no fundo do clube e ao lado
-              das piscinas. Todas com cozinha, banheiro privativo, Wi‑Fi e
-              ar-condicionado.
+              {FRASE_BASE} Cinco cabanas para 2 pessoas, ao lado das piscinas,
+              com cozinha, banheiro privativo, Wi‑Fi e ar-condicionado.
+              {hospedagem.precoAPartirDe !== null && (
+                <span className="mt-3 block text-bone">
+                  Diária a partir de{" "}
+                  <strong className="font-display text-2xl font-black">
+                    {formatPreco(hospedagem.precoAPartirDe)}
+                  </strong>
+                </span>
+              )}
               <span className="mt-4 flex flex-wrap gap-2">
                 <span className="rounded-full border border-gold/60 px-3 py-1 text-sm text-gold">
-                  Piscina inclusa · temporada de verão
+                  Piscina inclusa · novembro a março
                 </span>
                 <span className="rounded-full border border-gold/60 px-3 py-1 text-sm text-gold">
                   Academia inclusa
@@ -252,14 +263,9 @@ export default function Home() {
             >
               Fotos, regras e reserva das cabanas
             </Link>
-            <a
-              href={whatsapp("Olá! Quero reservar uma cabana no Clube 1992.")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full border border-bone/40 px-7 py-4 text-center font-semibold transition-colors hover:border-gold hover:text-gold"
-            >
-              Reservar pelo WhatsApp
-            </a>
+            <ReservarLink className="rounded-full border border-bone/40 px-7 py-4 text-center font-semibold transition-colors hover:border-gold hover:text-gold">
+              Ver disponibilidade no WhatsApp
+            </ReservarLink>
           </div>
         </div>
       </section>
@@ -281,7 +287,7 @@ export default function Home() {
                 <h3 className="font-display text-4xl font-extrabold uppercase leading-none">Piscinas</h3>
                 <p data-fade className="mt-3 text-ink/70">
                   Piscina principal com ilhas de palmeira, piscinas menores ao
-                  lado e o 1992 desenhado no fundo. Aberta na temporada de verão.
+                  lado e o 1992 desenhado no fundo. Aberta de novembro a março.
                 </p>
               </div>
             </div>

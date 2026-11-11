@@ -9,8 +9,8 @@ import {
   cabanaAmenities,
   formatPreco,
   hospedagem,
-  whatsapp,
 } from "../data/club";
+import ReservarLink from "./reservarLink";
 
 const HASH = /^#cabana-([1-5])$/;
 
@@ -234,22 +234,26 @@ function CabanaPanel({
 
         <div className="mt-8 flex flex-col gap-3 lg:mt-auto">
           {hospedagem.precoAPartirDe !== null && (
-            <p className="text-center">
-              <span className="text-sm text-bone/60">a partir de </span>
-              <span className="font-display text-3xl font-black">
-                {formatPreco(hospedagem.precoAPartirDe)}
-              </span>
-              <span className="text-sm text-bone/60"> por noite</span>
-            </p>
+            <div className="border-t border-white/10 pt-6 text-center">
+              <p>
+                <span className="text-sm text-bone/60">a partir de </span>
+                <span className="font-display text-4xl font-black">
+                  {formatPreco(hospedagem.precoAPartirDe)}
+                </span>
+                <span className="text-sm text-bone/60"> por noite</span>
+              </p>
+              <p className="mt-1 text-xs text-bone/50">
+                {formatPreco(hospedagem.diaria1)} para 1 pessoa · {formatPreco(hospedagem.diaria2)} para 2 pessoas
+              </p>
+            </div>
           )}
-          <a
-            href={whatsapp(`Olá! Quero reservar a ${cabana.name} no Clube 1992.`)}
-            target="_blank"
-            rel="noopener noreferrer"
+          <ReservarLink
+            cabana={index + 1}
             className="rounded-full bg-gold py-4 text-center font-semibold text-ink transition-colors hover:bg-bone"
           >
-            Reservar a {cabana.name} pelo WhatsApp
-          </a>
+            Reservar a {cabana.name}
+          </ReservarLink>
+          <p className="-mt-1 text-center text-xs text-bone/50">Atendimento pelo WhatsApp</p>
           <button
             onClick={onNext}
             className="py-2 text-center text-sm text-bone/60 underline-offset-4 hover:text-gold hover:underline"

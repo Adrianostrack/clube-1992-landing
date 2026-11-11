@@ -3,9 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { whatsapp } from "../data/club";
+import { mensagemReserva, whatsapp } from "../data/club";
+import { useOrigem } from "./reservarLink";
 
-const links = [
+const clubLinks = [
   { href: "/home#clube", label: "O clube" },
   { href: "/cabanas", label: "Cabanas" },
   { href: "/home#estrutura", label: "Estrutura" },
@@ -14,11 +15,25 @@ const links = [
   { href: "/transparency", label: "Transparência" },
 ];
 
+// Menu enxuto da página das cabanas (destino dos anúncios)
+const cabanasLinks = [
+  { href: "/cabanas#cabanas", label: "As cabanas" },
+  { href: "/cabanas#piscina-academia", label: "Piscina e academia" },
+  { href: "/cabanas#regras", label: "Regras" },
+  { href: "/home", label: "O clube" },
+];
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/home" || pathname === "/home/" || pathname === "/";
+  const isCabanas = pathname?.startsWith("/cabanas") ?? false;
+  const links = isCabanas ? cabanasLinks : clubLinks;
+  const origem = useOrigem();
+  const cta = isCabanas
+    ? { label: "Reservar", href: whatsapp(mensagemReserva(origem)) }
+    : { label: "Associe-se", href: whatsapp("Olá! Quero saber como me associar ao Clube 1992.") };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -67,12 +82,12 @@ export default function Navbar() {
               </Link>
             ))}
             <a
-              href={whatsapp("Olá! Quero saber como me associar ao Clube 1992.")}
+              href={cta.href}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-full bg-gold px-5 py-2.5 font-semibold text-ink hover:bg-bone transition-colors"
             >
-              Associe-se
+              {cta.label}
             </a>
           </nav>
 
@@ -111,12 +126,12 @@ export default function Navbar() {
               </Link>
             ))}
             <a
-              href={whatsapp("Olá! Quero saber como me associar ao Clube 1992.")}
+              href={cta.href}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-8 rounded-full bg-gold py-4 text-center font-semibold text-ink"
             >
-              Associe-se pelo WhatsApp
+              {cta.label} pelo WhatsApp
             </a>
           </nav>
         </div>
