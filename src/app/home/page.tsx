@@ -1,9 +1,12 @@
 import Image from "next/image";
 import Cabanas from "../components/cabanas";
 import HomeMotion from "../components/motion/homeMotion";
+import Diretoria from "../components/diretoria";
 import {
   CBF_URL,
   FGF_URL,
+  alojamentoItens,
+  alojamentos,
   teamStructure,
   whatsapp,
 } from "../data/club";
@@ -41,51 +44,48 @@ function Photo({
   );
 }
 
-const areas = [
+const poolTimes = [
   {
-    n: "01",
-    title: "Piscinas",
-    text: "Piscinas com ilhas de palmeira e quiosques em volta. A grande atração do verão em Carazinho.",
-    src: "/img/site/pool-ligth.webp",
-    alt: "Piscinas do clube durante o dia",
-    span: "md:col-span-7",
-    ratio: "aspect-[4/3] md:aspect-auto md:h-[30rem]",
+    label: "De manhã",
+    src: "/img/site/pool-day.webp",
+    alt: "Piscina do clube com palmeiras em um dia de sol",
   },
   {
-    n: "02",
-    title: "Piscina térmica",
-    text: "Coberta e aquecida, para quem não espera o verão.",
-    src: "/img/site/thermal-pool.webp",
-    alt: "Piscina térmica coberta",
-    span: "md:col-span-5",
-    ratio: "aspect-[4/3] md:aspect-auto md:h-[30rem]",
+    label: "No fim da tarde",
+    src: "/img/site/pool-sunset.webp",
+    alt: "Piscina com ilha de palmeira sob o pôr do sol",
+  },
+  {
+    label: "À noite",
+    src: "/img/site/pool-night.webp",
+    alt: "Piscina iluminada de azul à noite, com o 1992 desenhado no fundo",
   },
 ];
 
 const moreAreas = [
   {
-    n: "04",
+    n: "03",
     title: "Quadras de society",
     text: "Quadras abertas e fechadas, com iluminação para jogar à noite.",
     src: "/img/site/football-field.webp",
     alt: "Quadra de society iluminada à noite",
   },
   {
-    n: "05",
+    n: "04",
     title: "Beach tennis",
     text: "Quadras de areia para jogar o ano todo.",
     src: "/img/site/beach-tennis.webp",
     alt: "Jogadora sacando no beach tennis",
   },
   {
-    n: "06",
+    n: "05",
     title: "Quiosques e churrasqueiras",
     text: "Espaços cobertos com churrasqueira para reunir a família.",
     src: "/img/site/hut-shadow.webp",
     alt: "Quiosque de madeira com churrasqueira",
   },
   {
-    n: "07",
+    n: "06",
     title: "Área verde",
     text: "Bosque com mesas e caminho de pedra, à sombra das árvores.",
     src: "/img/site/shadow-nature.webp",
@@ -210,8 +210,8 @@ export default function Home() {
               sizes="(min-width: 1024px) 28vw, 50vw"
             />
             <Photo
-              src="/img/site/pool-dark.webp"
-              alt="Piscina com ilha de palmeira à noite"
+              src="/img/site/pool-night-house.webp"
+              alt="Piscina iluminada à noite, com palmeiras e a casa ao fundo"
               className="col-span-3 aspect-square"
               sizes="(min-width: 1024px) 28vw, 50vw"
             />
@@ -255,19 +255,29 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="mt-14 grid gap-3 md:grid-cols-12">
-            {areas.map((a) => (
-              <figure key={a.n} className={a.span}>
-                <Photo src={a.src} alt={a.alt} className={a.ratio} sizes="(min-width: 768px) 60vw, 100vw" parallax />
-                <figcaption className="mt-4 flex gap-4">
-                  <span className="font-display text-xl font-black text-gold-dark">{a.n}</span>
-                  <span>
-                    <span className="block font-display text-3xl font-extrabold uppercase leading-none">
-                      {a.title}
-                    </span>
-                    <span className="mt-2 block text-ink/70">{a.text}</span>
-                  </span>
-                </figcaption>
+          <div className="mt-14 grid gap-6 md:grid-cols-12 md:items-end">
+            <div className="flex gap-4 md:col-span-5">
+              <span className="font-display text-xl font-black text-gold-dark">01</span>
+              <div>
+                <h3 className="font-display text-4xl font-extrabold uppercase leading-none">Piscinas</h3>
+                <p data-fade className="mt-3 text-ink/70">
+                  Piscina principal com ilhas de palmeira, piscinas menores ao
+                  lado e o 1992 desenhado no fundo. Aberta na temporada de verão.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
+            {poolTimes.map((p, i) => (
+              <figure key={p.label} className={i === 1 ? "sm:translate-y-12" : ""}>
+                <Photo
+                  src={p.src}
+                  alt={p.alt}
+                  className="aspect-[3/4]"
+                  sizes="(min-width: 640px) 33vw, 100vw"
+                  parallax
+                />
+                <figcaption className="eyebrow mt-3 text-ink/55">{p.label}</figcaption>
               </figure>
             ))}
           </div>
@@ -277,12 +287,12 @@ export default function Home() {
         <div className="bg-coal text-bone">
           <div className="mx-auto grid max-w-7xl gap-10 px-5 py-20 md:px-8 md:py-24 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-4 lg:py-6">
-              <span className="font-display text-xl font-black text-gold">03</span>
+              <span className="font-display text-xl font-black text-gold">02</span>
               <h3 data-split className="mt-2 font-display text-6xl font-black uppercase leading-[0.88] md:text-7xl">
                 Academia
               </h3>
               <p data-fade className="mt-6 text-bone/75 leading-relaxed">
-                Musculação completa, com halteres, anilhas, máquinas e
+                Musculação e cardio: anilhas, máquinas, fileira de esteiras e
                 professor acompanhando. Aberta para sócios e para quem está
                 hospedado nas cabanas.
               </p>
@@ -297,23 +307,18 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-2 gap-3 lg:col-span-8">
               <Photo
-                src="/img/site/gym-center.webp"
-                alt="Academia com halteres coloridos e as palavras Focus e Force na parede"
-                className="col-span-2 aspect-[16/9]"
+                src="/img/site/gym-lion.webp"
+                alt="Área de musculação com anilhas coloridas, painel de leão e luzes de LED"
+                className="aspect-[3/4]"
+                sizes="(min-width: 1024px) 30vw, 50vw"
                 parallax
-                sizes="(min-width: 1024px) 60vw, 100vw"
               />
               <Photo
-                src="/img/site/gym-left.webp"
-                alt="Estação de supino e anilhas da academia"
-                className="aspect-[4/3]"
+                src="/img/site/gym-cardio.webp"
+                alt="Fileira de esteiras da academia"
+                className="aspect-[3/4] translate-y-10"
                 sizes="(min-width: 1024px) 30vw, 50vw"
-              />
-              <Photo
-                src="/img/site/gym-right.webp"
-                alt="Aparelhos e espelhos da academia"
-                className="aspect-[4/3]"
-                sizes="(min-width: 1024px) 30vw, 50vw"
+                parallax
               />
             </div>
           </div>
@@ -399,7 +404,17 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mx-auto max-w-7xl px-5 pb-24 md:px-8">
+        {/* Mascotes */}
+        <div className="mx-auto max-w-5xl px-5 pb-16 md:px-8">
+          <Photo
+            src="/img/site/mascots.webp"
+            alt="Os três macacos mascotes do 1992 com o escudo e a frase De Carazinho para o Mundo"
+            className="aspect-[1245/862] rounded-[1.5rem]"
+            sizes="(min-width: 1280px) 1200px, 100vw"
+          />
+        </div>
+
+        <div className="mx-auto max-w-7xl px-5 pb-20 md:px-8">
           <div className="grid gap-x-3 gap-y-10 md:grid-cols-3">
             {teamStructure.map((item) => (
               <figure key={item.title}>
@@ -420,10 +435,55 @@ export default function Home() {
             ))}
           </div>
         </div>
+
+        {/* Alojamentos */}
+        <div className="border-t border-white/10">
+          <div className="mx-auto grid max-w-7xl gap-10 px-5 pt-20 md:px-8 lg:grid-cols-12">
+            <div className="lg:col-span-5">
+              <p className="eyebrow text-gold">Moradia dos atletas</p>
+              <h3 data-split className="mt-3 font-display text-5xl font-black uppercase leading-[0.9] md:text-7xl">
+                Seis dormitórios dentro do clube.
+              </h3>
+            </div>
+            <div className="lg:col-span-6 lg:col-start-7 lg:pt-8">
+              <p data-fade className="leading-relaxed text-bone/75">
+                Todos os atletas recebem roupa de cama, colchão, toalhas de
+                banho e de rosto, fornecidos pelo clube sem custo.
+              </p>
+              <ul data-fade className="mt-6 grid grid-cols-1 gap-x-6 gap-y-2 text-sm text-bone/80 sm:grid-cols-2">
+                {alojamentoItens.map((item) => (
+                  <li key={item} className="flex items-baseline gap-2">
+                    <span className="h-1 w-1 shrink-0 translate-y-[-2px] bg-gold" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div
+            className="snap-gallery mt-12 flex gap-3 overflow-x-auto px-5 pb-24 md:px-8 lg:px-[max(2rem,calc((100vw-80rem)/2+2rem))]"
+            aria-label="Fotos dos dormitórios"
+          >
+            {alojamentos.map((a) => (
+              <figure key={a.src} className="w-[78vw] shrink-0 sm:w-[24rem]">
+                <Photo src={a.src} alt={a.alt} className="aspect-[16/9]" sizes="(min-width: 640px) 384px, 78vw" />
+                <figcaption className="eyebrow mt-3 text-bone/50">Dormitório {a.dorm}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* DIRETORIA */}
+      <section id="diretoria" data-card className="relative z-[4] -mt-10 rounded-t-[2rem] bg-bone text-ink md:-mt-14 md:rounded-t-[3rem]">
+        <div className="mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28">
+          <Diretoria tone="light" />
+        </div>
       </section>
 
       {/* ASSOCIE-SE */}
-      <section id="associe" data-card className="relative z-[4] -mt-10 rounded-t-[2rem] bg-gold text-ink md:-mt-14 md:rounded-t-[3rem]">
+      <section id="associe" data-card className="relative z-[5] -mt-10 rounded-t-[2rem] bg-gold text-ink md:-mt-14 md:rounded-t-[3rem]">
         <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 md:px-8 md:py-28 lg:grid-cols-12">
           <div className="lg:col-span-6">
             <p className="eyebrow text-ink/60">Seja sócio</p>

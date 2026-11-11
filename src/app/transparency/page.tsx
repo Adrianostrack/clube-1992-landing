@@ -1,4 +1,5 @@
 "use client";
+import Diretoria from "../components/diretoria";
 
 export default function Transparency() {
   return (
@@ -14,6 +15,10 @@ export default function Transparency() {
             </p>
           </div>
         </div>
+      </div>
+
+      <div id="diretoria" className="max-w-7xl mx-auto mb-8 rounded-2xl bg-bone p-8 text-ink shadow-xl md:p-12">
+        <Diretoria tone="light" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto mb-8">
