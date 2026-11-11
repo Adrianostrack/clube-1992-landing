@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { mensagemReserva, whatsapp } from "../data/club";
 import { useOrigem } from "./reservarLink";
+import { entidades } from "./filiacoes";
 
 const clubLinks = [
   { href: "/home#clube", label: "O clube" },
@@ -46,6 +47,35 @@ export default function Navbar() {
     document.body.style.overflow = isOpen ? "hidden" : "";
   }, [isOpen]);
 
+  // Escudos CBF/FGF no menu: aparecem quando o selo do topo da home sai da tela.
+  // Em páginas sem o selo, ficam sempre visíveis.
+  const [showCrests, setShowCrests] = useState(false);
+  useEffect(() => {
+    let io: IntersectionObserver | null = null;
+    const raf = requestAnimationFrame(() => {
+      const selos = Array.from(document.querySelectorAll<HTMLElement>("[data-selo-hero]"));
+      if (!selos.length) {
+        setShowCrests(true);
+        return;
+      }
+      const visiveis = new Set<Element>();
+      io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => (e.isIntersecting ? visiveis.add(e.target) : visiveis.delete(e.target)));
+          // só conta o selo que está de fato exibido (o do celular some no desktop e vice-versa)
+          const algumNaTela = Array.from(visiveis).some((el) => (el as HTMLElement).offsetParent !== null);
+          setShowCrests(!algumNaTela);
+        },
+        { rootMargin: "-80px 0px 0px 0px" }
+      );
+      selos.forEach((el) => io!.observe(el));
+    });
+    return () => {
+      cancelAnimationFrame(raf);
+      io?.disconnect();
+    };
+  }, [pathname]);
+
   const solid = scrolled || !isHome || isOpen;
 
   return (
@@ -66,12 +96,12 @@ export default function Navbar() {
               alt=""
               priority
             />
-            <span className="font-display text-2xl font-extrabold uppercase tracking-wide">
+            <span className="font-display text-2xl font-extrabold uppercase tracking-wide lg:hidden xl:inline">
               Clube 1992
             </span>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-8 text-sm font-medium">
+          <nav className="hidden lg:flex items-center gap-6 text-sm font-medium xl:gap-8">
             {links.map((l) => (
               <Link
                 key={l.href}
@@ -81,6 +111,7 @@ export default function Navbar() {
                 {l.label}
               </Link>
             ))}
+            <NavCrests show={showCrests} />
             <a
               href={cta.href}
               target="_blank"
@@ -90,6 +121,10 @@ export default function Navbar() {
               {cta.label}
             </a>
           </nav>
+
+          <div className="ml-auto mr-2 lg:hidden">
+            <NavCrests show={showCrests} compact />
+          </div>
 
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -137,5 +172,41 @@ export default function Navbar() {
         </div>
       {!isHome && <div className="h-20" aria-hidden />}
     </>
+  );
+}
+
+// Escudos compactos no menu, com entrada animada (um depois do outro)
+function NavCrests({ show, compact = false }: { show: boolean; compact?: boolean }) {
+  return (
+    <div
+      aria-hidden={!show}
+      className={`flex items-center overflow-hidden transition-[max-width,opacity] duration-500 ease-out ${
+        show ? "max-w-[9rem] opacity-100" : "max-w-0 opacity-0"
+      } ${compact ? "gap-2" : "gap-3"}`}
+    >
+      {!compact && <span className="mr-1 h-7 w-px shrink-0 bg-white/20" />}
+      {entidades.map((e, i) => (
+        <a
+          key={e.sigla}
+          href={e.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          title={`Filiado à ${e.nome}`}
+          tabIndex={show ? 0 : -1}
+          className={`crest-mono block shrink-0 transition-transform duration-500 ease-out ${
+            show ? "translate-y-0" : "-translate-y-6"
+          }`}
+          style={{ transitionDelay: show ? `${120 + i * 90}ms` : "0ms" }}
+        >
+          <Image
+            src={e.src}
+            alt={`Escudo da ${e.nome}`}
+            width={e.w}
+            height={e.h}
+            className={`${compact ? "h-7" : "h-9"} w-auto`}
+          />
+        </a>
+      ))}
+    </div>
   );
 }

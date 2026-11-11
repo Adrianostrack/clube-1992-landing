@@ -1,10 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import { entidades } from "./filiacoes";
 import {
   ADDRESS,
-  CBF_URL,
   EMAIL,
-  FGF_URL,
   MAPS_URL,
   WHATSAPP_DISPLAY,
   whatsapp,
@@ -63,17 +62,22 @@ export default function Footer() {
 
         <div className="lg:col-span-3">
           <p className="eyebrow text-gold">Filiado a</p>
-          <ul className="mt-4 space-y-3 text-sm">
-            <li>
-              <a href={FGF_URL} target="_blank" rel="noopener noreferrer" className="hover:text-gold">
-                Federação Gaúcha de Futebol ↗
-              </a>
-            </li>
-            <li>
-              <a href={CBF_URL} target="_blank" rel="noopener noreferrer" className="hover:text-gold">
-                Confederação Brasileira de Futebol ↗
-              </a>
-            </li>
+          <ul className="mt-4 space-y-4 text-sm">
+            {entidades.map((e) => (
+              <li key={e.sigla}>
+                <a
+                  href={e.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-3 hover:text-gold"
+                >
+                  <span className="crest-mono flex h-12 w-10 items-center justify-center">
+                    <Image src={e.src} alt="" width={e.w} height={e.h} className="max-h-12 w-auto" />
+                  </span>
+                  {e.nome} ↗
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

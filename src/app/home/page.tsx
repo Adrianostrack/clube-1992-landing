@@ -4,9 +4,8 @@ import Photo from "../components/photo";
 import ReservarLink from "../components/reservarLink";
 import HomeMotion from "../components/motion/homeMotion";
 import Diretoria from "../components/diretoria";
+import { PlacasFiliacao, SeloFiliacao } from "../components/filiacoes";
 import {
-  CBF_URL,
-  FGF_URL,
   ESTADIO_MATERIA_URL,
   alojamentoItens,
   alojamentos,
@@ -121,7 +120,11 @@ export default function Home() {
               Associe-se
             </a>
           </div>
+          <SeloFiliacao className="mt-10 md:hidden" />
           </div>
+        </div>
+        <div data-hero-fade className="absolute bottom-36 right-8 hidden md:block lg:right-12">
+          <SeloFiliacao grande />
         </div>
       </section>
 
@@ -389,31 +392,8 @@ export default function Home() {
               Gaúcha de Futebol e registrados na CBF.
             </p>
 
-            <div data-fade className="mt-10 grid gap-3 sm:grid-cols-2 md:max-w-3xl">
-              <a
-                href={FGF_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center justify-between border border-white/15 bg-ink/60 p-5 hover:border-gold transition-colors"
-              >
-                <span>
-                  <span className="block font-display text-4xl font-black leading-none">FGF</span>
-                  <span className="mt-1 block text-sm text-bone/60">Federação Gaúcha de Futebol</span>
-                </span>
-                <span className="text-xl text-gold transition-transform group-hover:translate-x-1" aria-hidden>↗</span>
-              </a>
-              <a
-                href={CBF_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center justify-between border border-white/15 bg-ink/60 p-5 hover:border-gold transition-colors"
-              >
-                <span>
-                  <span className="block font-display text-4xl font-black leading-none">CBF</span>
-                  <span className="mt-1 block text-sm text-bone/60">Confederação Brasileira de Futebol</span>
-                </span>
-                <span className="text-xl text-gold transition-transform group-hover:translate-x-1" aria-hidden>↗</span>
-              </a>
+            <div data-fade className="mt-10">
+              <PlacasFiliacao />
             </div>
 
             <dl className="mt-12 flex flex-wrap gap-x-12 gap-y-6 border-t border-white/10 pt-8">
@@ -487,7 +467,7 @@ export default function Home() {
           </div>
 
           <div
-            className="snap-gallery mt-12 flex gap-3 overflow-x-auto px-5 pb-24 md:px-8 lg:px-[max(2rem,calc((100vw-80rem)/2+2rem))]"
+            className="snap-gallery mt-12 flex gap-3 overflow-x-auto scroll-px-5 px-5 pb-24 md:scroll-px-8 md:px-8 lg:px-[max(2rem,calc((100vw-80rem)/2+2rem))]"
             aria-label="Fotos dos dormitórios"
           >
             {alojamentos.map((a) => (

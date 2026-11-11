@@ -27,6 +27,12 @@ const destaques = [
   { titulo: "Wi‑Fi, ar e Smart TV", texto: "Em todas as cabanas" },
 ];
 
+const piscinaFotos = [
+  { src: "/img/site/pool-day.webp", alt: "Piscina com palmeiras sob o sol", legenda: "De manhã" },
+  { src: "/img/site/pool-sunset.webp", alt: "Piscina com ilha de palmeira no pôr do sol", legenda: "No fim da tarde" },
+  { src: "/img/site/pool-night.webp", alt: "Piscina iluminada de azul à noite, com o 1992 no fundo", legenda: "À noite" },
+];
+
 const passos = [
   "Escolha a cabana e veja as fotos.",
   "Chame o clube no WhatsApp com as datas de entrada e saída e o número de pessoas.",
@@ -35,6 +41,7 @@ const passos = [
 
 const SECTIONS = [
   { id: "topo", label: "Cabanas" },
+  { id: "piscina", label: "Piscina" },
   { id: "cabanas", label: "Fotos" },
   { id: "piscina-academia", label: "Piscina e academia" },
   { id: "regras", label: "Regras" },
@@ -86,21 +93,27 @@ export default function CabanasPage() {
               </a>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-3 lg:col-span-5">
+          <div className="relative pb-10 pl-10 lg:col-span-5 lg:pl-0">
             <Photo
-              src="/img/site/pool-night.webp"
-              alt="Piscina iluminada à noite, ao lado das cabanas"
-              className="aspect-[3/4]"
-              sizes="(min-width: 1024px) 20vw, 50vw"
+              src="/img/site/pool-day.webp"
+              alt="Piscina do Clube 1992 com palmeiras em um dia de sol"
+              className="aspect-[4/5] rounded-[1.25rem]"
+              sizes="(min-width: 1024px) 38vw, 90vw"
               priority
+              parallax
             />
-            <Photo
-              src="/img/cabanas/c5/1.webp"
-              alt="Interior da Cabana 5, em madeira, com mesa de jantar"
-              className="aspect-[3/4] translate-y-8"
-              sizes="(min-width: 1024px) 20vw, 50vw"
-              priority
-            />
+            <div className="absolute bottom-0 left-0 w-[42%] rounded-[1rem] border-4 border-ink lg:-left-10">
+              <Photo
+                src="/img/cabanas/c5/1.webp"
+                alt="Interior da Cabana 5, em madeira, com mesa de jantar"
+                className="aspect-[4/5] rounded-[0.75rem]"
+                sizes="(min-width: 1024px) 16vw, 40vw"
+                priority
+              />
+            </div>
+            <span className="absolute right-4 top-4 rounded-full bg-ink/75 px-3 py-1.5 text-xs font-semibold text-bone backdrop-blur-sm">
+              Piscina inclusa · nov a mar
+            </span>
           </div>
         </div>
 
@@ -115,6 +128,38 @@ export default function CabanasPage() {
               </div>
             ))}
           </dl>
+        </div>
+      </section>
+
+      {/* PISCINA: as fotos em destaque */}
+      <section id="piscina" className="overflow-hidden bg-ink">
+        <div className="mx-auto grid max-w-7xl gap-6 px-5 pt-20 md:px-8 md:pt-28 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-7">
+            <p className="eyebrow text-gold">A poucos passos da cabana</p>
+            <h2 data-split className="mt-3 font-display text-6xl font-black uppercase leading-[0.88] md:text-8xl">
+              A piscina é sua durante a estadia.
+            </h2>
+          </div>
+          <p data-fade className="leading-relaxed text-bone/75 lg:col-span-5">
+            Piscina principal com ilhas de palmeira e o 1992 desenhado no
+            fundo, liberada para hóspedes de novembro a março, das 9h às 12h30
+            e das 13h30 às 18h30.
+          </p>
+        </div>
+
+        <div className="snap-gallery mt-12 flex gap-3 overflow-x-auto scroll-px-5 px-5 pb-20 md:grid md:grid-cols-3 md:overflow-visible md:px-8 md:pb-28 lg:mx-auto lg:max-w-7xl">
+          {piscinaFotos.map((f, i) => (
+            <figure key={f.src} className={`w-[80vw] shrink-0 md:w-auto ${i === 1 ? "md:translate-y-16" : ""}`}>
+              <Photo
+                src={f.src}
+                alt={f.alt}
+                className="aspect-[3/4] rounded-[1.25rem] md:aspect-[3/4.4]"
+                sizes="(min-width: 768px) 33vw, 80vw"
+                parallax
+              />
+              <figcaption className="eyebrow mt-3 text-bone/55">{f.legenda}</figcaption>
+            </figure>
+          ))}
         </div>
       </section>
 
@@ -141,8 +186,8 @@ export default function CabanasPage() {
             </p>
             <div className="mt-8 grid grid-cols-2 gap-3">
               <Photo
-                src="/img/site/pool-day.webp"
-                alt="Piscina do clube em dia de sol"
+                src="/img/site/pool-night-house.webp"
+                alt="Piscina iluminada à noite"
                 className="aspect-square"
                 sizes="(min-width: 1024px) 18vw, 50vw"
               />

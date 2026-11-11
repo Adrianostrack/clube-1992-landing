@@ -90,6 +90,21 @@ html.skip-preloader .preloader {
   }
 }
 
+/* Escudos da CBF e da FGF em prata; cor original ao passar o mouse */
+.crest-mono {
+  filter: grayscale(1) brightness(1.35) contrast(0.95);
+  opacity: 0.85;
+  transition: filter 0.35s ease, opacity 0.35s ease, transform 0.35s ease;
+}
+.crest-mono:hover,
+.crest-mono:focus-visible,
+.group:hover .crest-mono,
+.group:focus-visible .crest-mono {
+  filter: none;
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
 /* Indicador de seção (canto inferior esquerdo) */
 .section-dot {
   transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.3s;
