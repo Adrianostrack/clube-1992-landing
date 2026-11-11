@@ -291,7 +291,7 @@ export default function HomeMotion({
   return (
     <nav
       aria-label="Seções da página"
-      className="pointer-events-none fixed bottom-8 left-6 z-30 hidden flex-col gap-2 mix-blend-difference lg:flex"
+      className="pointer-events-none fixed bottom-8 left-6 z-30 hidden flex-col gap-2 mix-blend-difference 2xl:flex"
     >
       {sections.map((s, i) => (
         <a

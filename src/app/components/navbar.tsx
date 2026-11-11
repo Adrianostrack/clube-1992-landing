@@ -16,13 +16,8 @@ const clubLinks = [
   { href: "/transparency", label: "Transparência" },
 ];
 
-// Menu enxuto da página das cabanas (destino dos anúncios)
-const cabanasLinks = [
-  { href: "/cabanas#cabanas", label: "As cabanas" },
-  { href: "/cabanas#piscina-academia", label: "Piscina e academia" },
-  { href: "/cabanas#regras", label: "Regras" },
-  { href: "/home", label: "O clube" },
-];
+// Página das cabanas: menu enxuto, só logo e botão de WhatsApp (meta única da página)
+const cabanasLinks: { href: string; label: string }[] = [];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,7 +28,7 @@ export default function Navbar() {
   const links = isCabanas ? cabanasLinks : clubLinks;
   const origem = useOrigem();
   const cta = isCabanas
-    ? { label: "Reservar", href: whatsapp(mensagemReserva(origem)) }
+    ? { label: "Reservar pelo WhatsApp", href: whatsapp(mensagemReserva(origem)) }
     : { label: "Associe-se", href: whatsapp("Olá! Quero saber como me associar ao Clube 1992.") };
 
   useEffect(() => {
@@ -126,9 +121,19 @@ export default function Navbar() {
             <NavCrests show={showCrests} compact />
           </div>
 
+          {isCabanas && (
+            <a
+              href={cta.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-gold px-4 py-2 text-sm font-semibold text-ink lg:hidden"
+            >
+              Reservar
+            </a>
+          )}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden -mr-2 p-2 text-bone"
+            className={`-mr-2 p-2 text-bone lg:hidden ${isCabanas ? "hidden" : ""}`}
             aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
             aria-expanded={isOpen}
           >

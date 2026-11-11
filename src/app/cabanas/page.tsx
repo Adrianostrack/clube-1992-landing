@@ -6,25 +6,43 @@ import ReservarLink from "../components/reservarLink";
 import {
   ADDRESS,
   DESCRICAO_BASE,
-  FRASE_BASE,
   MAPS_URL,
   TEXTO_PISCINA_ACADEMIA,
   formatPreco,
   horariosAreas,
   hospedagem,
-  regrasHospedagem,
 } from "../data/club";
 
+// Estrutura e textos seguem o documento "Cabanas Clube 1992 — Padrão Airbnb + Site"
 export const metadata: Metadata = {
-  title: "Cabanas no Clube 1992 · Piscina e academia para hóspedes em Carazinho",
-  description: `${FRASE_BASE} Diária a partir de R$ 150. Reserva pelo WhatsApp.`,
+  title: "Cabanas com piscina e academia em Carazinho · Clube 1992",
+  description:
+    "Durma dentro do Clube 1992. Piscina (de novembro a março) e academia incluídas na estadia. A partir de R$ 150 por noite. Reserva pelo WhatsApp.",
 };
 
-const destaques = [
-  { titulo: "Piscina inclusa", texto: "De novembro a março" },
-  { titulo: "Academia inclusa", texto: "Segunda a sábado" },
-  { titulo: "Aceita animais", texto: "Traga seu pet" },
-  { titulo: "Wi‑Fi, ar e Smart TV", texto: "Em todas as cabanas" },
+const MAPA_EMBED =
+  "https://www.google.com/maps?q=Clube+1992,+Av.+Flores+da+Cunha,+3211+-+Gl%C3%B3ria,+Carazinho+-+RS&output=embed";
+
+const porQue = [
+  {
+    titulo: "Piscina e academia incluídas",
+    texto: "A piscina de novembro a março e a academia de segunda a sábado, sem custo extra.",
+    src: "/img/site/pool-sunset.webp",
+    alt: "Piscina do clube no fim da tarde",
+  },
+  {
+    titulo: "Uma cabana só sua",
+    texto:
+      "Ar-condicionado, cozinha, banheiro privativo, Wi‑Fi, Smart TV, toalhas e estacionamento gratuito.",
+    src: "/img/cabanas/c4/2.webp",
+    alt: "Interior de uma cabana com cama de casal e cozinha",
+  },
+  {
+    titulo: "Quiosques e churrasco",
+    texto: "Use os quiosques e a área de churrasco do clube durante a estadia.",
+    src: "/img/site/hut-shadow.webp",
+    alt: "Quiosque de madeira com churrasqueira",
+  },
 ];
 
 const piscinaFotos = [
@@ -34,18 +52,28 @@ const piscinaFotos = [
 ];
 
 const passos = [
-  "Escolha a cabana e veja as fotos.",
-  "Chame o clube no WhatsApp com as datas de entrada e saída e o número de pessoas.",
-  "Para garantir a data, pague o valor integral por Pix ou cartão na secretaria do clube.",
+  "Clique no botão e informe as datas.",
+  "Confirme a disponibilidade e o valor.",
+  "Pague por Pix (envie o comprovante no WhatsApp) ou por cartão na secretaria do clube.",
+];
+
+const faq = [
+  { p: "Aceita animais?", r: "Sim." },
+  { p: "E crianças?", r: "Colchão no chão para até 2 crianças da família, sem custo extra." },
+  { p: "A piscina funciona o ano todo?", r: "Não, de novembro a março." },
+  { p: "Check-in e check-out?", r: "A partir das 14h e até as 12h." },
+  { p: "Cancelamento?", r: "Pagamento integral para reservar, sem reembolso." },
+  { p: "Estadia mínima?", r: "1 noite." },
 ];
 
 const SECTIONS = [
-  { id: "topo", label: "Cabanas" },
-  { id: "piscina", label: "Piscina" },
-  { id: "cabanas", label: "Fotos" },
+  { id: "topo", label: "Início" },
+  { id: "por-que", label: "Por que ficar" },
+  { id: "cabanas", label: "As 5 cabanas" },
   { id: "piscina-academia", label: "Piscina e academia" },
-  { id: "regras", label: "Regras" },
-  { id: "reservar", label: "Reservar" },
+  { id: "reservar", label: "Como reservar" },
+  { id: "perguntas", label: "Perguntas" },
+  { id: "localizacao", label: "Localização" },
 ];
 
 const btnGold =
@@ -53,44 +81,35 @@ const btnGold =
 
 export default function CabanasPage() {
   return (
-    <main>
-      {/* TOPO */}
+    <main className="pb-24 lg:pb-0">
+      {/* 1. TOPO */}
       <section id="topo" className="bg-ink">
-        <div className="mx-auto grid max-w-7xl gap-10 px-5 pb-16 pt-12 md:px-8 md:pt-20 lg:grid-cols-12 lg:items-end">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 pb-20 pt-12 md:px-8 md:pt-20 lg:grid-cols-12 lg:items-center">
           <div className="lg:col-span-7">
-            <p className="eyebrow text-gold">Hospedagem · Carazinho/RS</p>
+            <p className="eyebrow text-gold">Hospedagem no Clube 1992</p>
             <h1
               data-split
               className="mt-3 font-display text-6xl font-black uppercase leading-[0.86] md:text-8xl"
             >
-              Cabanas dentro do Clube 1992.
+              Cabanas com piscina e academia em Carazinho
             </h1>
             <p data-fade className="mt-6 max-w-xl text-lg leading-relaxed text-bone/80">
-              {FRASE_BASE} Cada cabana comporta 2 pessoas, e famílias podem
-              acrescentar colchão para até 2 crianças sem custo extra.
+              Durma dentro do Clube 1992. Piscina (de novembro a março) e
+              academia incluídas na estadia.
             </p>
             {hospedagem.precoAPartirDe !== null && (
               <p data-fade className="mt-6">
-                <span className="text-bone/60">a partir de </span>
+                <span className="text-bone/60">A partir de </span>
                 <span className="font-display text-5xl font-black">
                   {formatPreco(hospedagem.precoAPartirDe)}
                 </span>
                 <span className="text-bone/60"> por noite</span>
-                <span className="mt-1 block text-sm text-bone/50">
-                  {formatPreco(hospedagem.diaria1)} para 1 pessoa · {formatPreco(hospedagem.diaria2)} para 2 pessoas
-                </span>
               </p>
             )}
-            <div data-fade className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ReservarLink magnetic className={btnGold}>
-                Ver disponibilidade no WhatsApp
+            <div data-fade className="mt-8">
+              <ReservarLink magnetic className={`inline-block ${btnGold}`}>
+                Reservar pelo WhatsApp
               </ReservarLink>
-              <a
-                href="#cabanas"
-                className="rounded-full border border-bone/40 px-7 py-4 text-center font-semibold transition-colors hover:border-gold hover:text-gold"
-              >
-                Ver as cinco cabanas
-              </a>
             </div>
           </div>
           <div className="relative pb-10 pl-10 lg:col-span-5 lg:pl-0">
@@ -111,49 +130,72 @@ export default function CabanasPage() {
                 priority
               />
             </div>
-            <span className="absolute right-4 top-4 rounded-full bg-ink/75 px-3 py-1.5 text-xs font-semibold text-bone backdrop-blur-sm">
-              Piscina inclusa · nov a mar
-            </span>
           </div>
-        </div>
-
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <dl className="grid grid-cols-2 border-y border-white/10 md:grid-cols-4">
-            {destaques.map((d) => (
-              <div key={d.titulo} data-fade className="py-6 pr-4">
-                <dt className="font-display text-2xl font-extrabold uppercase leading-none md:text-3xl">
-                  {d.titulo}
-                </dt>
-                <dd className="mt-1 text-sm text-bone/60">{d.texto}</dd>
-              </div>
-            ))}
-          </dl>
         </div>
       </section>
 
-      {/* PISCINA: as fotos em destaque */}
-      <section id="piscina" className="overflow-hidden bg-ink">
+      {/* 2. POR QUE FICAR AQUI */}
+      <section id="por-que" className="bg-bone text-ink">
+        <div className="mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28">
+          <div className="grid gap-6 lg:grid-cols-12 lg:items-end">
+            <h2 data-split className="font-display text-5xl font-black uppercase leading-[0.9] md:text-7xl lg:col-span-6">
+              Por que ficar aqui
+            </h2>
+            <p data-fade className="leading-relaxed text-ink/70 lg:col-span-6">
+              {DESCRICAO_BASE}
+            </p>
+          </div>
+          <div className="mt-12 grid gap-x-4 gap-y-10 md:grid-cols-3">
+            {porQue.map((p, i) => (
+              <figure key={p.titulo}>
+                <Photo src={p.src} alt={p.alt} className="aspect-[4/3] rounded-[1rem]" sizes="(min-width: 768px) 33vw, 100vw" />
+                <figcaption className="mt-5 flex gap-4">
+                  <span className="font-display text-xl font-black text-gold-dark">0{i + 1}</span>
+                  <span>
+                    <span className="block font-display text-3xl font-extrabold uppercase leading-none">{p.titulo}</span>
+                    <span className="mt-2 block text-ink/70">{p.texto}</span>
+                  </span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. AS 5 CABANAS */}
+      <section id="cabanas" className="bg-ink">
+        <div className="mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28">
+          <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
+            <h2 data-split className="font-display text-6xl font-black uppercase leading-[0.88] md:text-8xl">
+              As 5 cabanas
+            </h2>
+            <p className="text-bone/60">Todas para 2 pessoas · mesmo valor nas cinco</p>
+          </div>
+          <Cabanas />
+        </div>
+      </section>
+
+      {/* 4. PISCINA E ACADEMIA */}
+      <section id="piscina-academia" className="overflow-hidden bg-coal">
         <div className="mx-auto grid max-w-7xl gap-6 px-5 pt-20 md:px-8 md:pt-28 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-7">
-            <p className="eyebrow text-gold">A poucos passos da cabana</p>
+          <div className="lg:col-span-6">
+            <p className="eyebrow text-gold">Incluído na estadia</p>
             <h2 data-split className="mt-3 font-display text-6xl font-black uppercase leading-[0.88] md:text-8xl">
-              A piscina é sua durante a estadia.
+              Piscina e academia
             </h2>
           </div>
-          <p data-fade className="leading-relaxed text-bone/75 lg:col-span-5">
-            Piscina principal com ilhas de palmeira e o 1992 desenhado no
-            fundo, liberada para hóspedes de novembro a março, das 9h às 12h30
-            e das 13h30 às 18h30.
+          <p data-fade className="leading-relaxed text-bone/75 lg:col-span-6">
+            {TEXTO_PISCINA_ACADEMIA}
           </p>
         </div>
 
-        <div className="snap-gallery mt-12 flex gap-3 overflow-x-auto scroll-px-5 px-5 pb-20 md:grid md:grid-cols-3 md:overflow-visible md:px-8 md:pb-28 lg:mx-auto lg:max-w-7xl">
+        <div className="snap-gallery mt-12 flex gap-3 overflow-x-auto scroll-px-5 px-5 md:grid md:grid-cols-3 md:overflow-visible md:px-8 lg:mx-auto lg:max-w-7xl">
           {piscinaFotos.map((f, i) => (
-            <figure key={f.src} className={`w-[80vw] shrink-0 md:w-auto ${i === 1 ? "md:translate-y-16" : ""}`}>
+            <figure key={f.src} className={`w-[80vw] shrink-0 md:w-auto ${i === 1 ? "md:translate-y-12" : ""}`}>
               <Photo
                 src={f.src}
                 alt={f.alt}
-                className="aspect-[3/4] rounded-[1.25rem] md:aspect-[3/4.4]"
+                className="aspect-[3/4] rounded-[1.25rem]"
                 sizes="(min-width: 768px) 33vw, 80vw"
                 parallax
               />
@@ -161,45 +203,17 @@ export default function CabanasPage() {
             </figure>
           ))}
         </div>
-      </section>
 
-      {/* CABANAS (galeria completa) */}
-      <section id="cabanas" className="bg-ink">
-        <div className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
-          <p data-fade className="mb-12 max-w-3xl text-lg leading-relaxed text-bone/75">
-            {DESCRICAO_BASE}
-          </p>
-          <Cabanas />
-        </div>
-      </section>
-
-      {/* PISCINA E ACADEMIA */}
-      <section id="piscina-academia" className="bg-coal">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 md:px-8 md:py-28 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <p className="eyebrow text-gold">Incluso na estadia</p>
-            <h2 data-split className="mt-3 font-display text-5xl font-black uppercase leading-[0.9] md:text-7xl">
-              Piscina e academia
-            </h2>
-            <p data-fade className="mt-6 leading-relaxed text-bone/75">
-              {TEXTO_PISCINA_ACADEMIA}
-            </p>
-            <div className="mt-8 grid grid-cols-2 gap-3">
-              <Photo
-                src="/img/site/pool-night-house.webp"
-                alt="Piscina iluminada à noite"
-                className="aspect-square"
-                sizes="(min-width: 1024px) 18vw, 50vw"
-              />
-              <Photo
-                src="/img/site/gym-lion.webp"
-                alt="Academia do clube"
-                className="aspect-square"
-                sizes="(min-width: 1024px) 18vw, 50vw"
-              />
-            </div>
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-20 md:px-8 md:py-28 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <Photo
+              src="/img/site/gym-lion.webp"
+              alt="Área de musculação da academia do clube"
+              className="aspect-[4/5] rounded-[1.25rem]"
+              sizes="(min-width: 1024px) 30vw, 100vw"
+            />
           </div>
-          <div className="lg:col-span-6 lg:col-start-7">
+          <div className="lg:col-span-7 lg:col-start-6 lg:self-center">
             <table className="w-full border-t border-white/15 text-left">
               <caption className="sr-only">Horários da piscina e da academia</caption>
               <thead>
@@ -228,31 +242,7 @@ export default function CabanasPage() {
         </div>
       </section>
 
-      {/* REGRAS */}
-      <section id="regras" className="bg-bone text-ink">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 md:px-8 md:py-28 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <p className="eyebrow text-gold-dark">Antes de reservar</p>
-            <h2 data-split className="mt-3 font-display text-5xl font-black uppercase leading-[0.9] md:text-6xl">
-              Regras da hospedagem
-            </h2>
-          </div>
-          <dl className="border-t border-ink/15 lg:col-span-7 lg:col-start-6">
-            {regrasHospedagem.map((r) => (
-              <div
-                key={r.rotulo}
-                data-fade
-                className="grid gap-1 border-b border-ink/15 py-5 sm:grid-cols-[10rem_1fr] sm:gap-6"
-              >
-                <dt className="eyebrow text-ink/55 sm:pt-1">{r.rotulo}</dt>
-                <dd className="text-lg leading-relaxed">{r.valor}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </section>
-
-      {/* COMO RESERVAR */}
+      {/* 5. COMO RESERVAR */}
       <section id="reservar" className="bg-gold text-ink">
         <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 md:px-8 md:py-28 lg:grid-cols-12">
           <div className="lg:col-span-6">
@@ -264,7 +254,7 @@ export default function CabanasPage() {
               magnetic
               className="mt-10 inline-block rounded-full bg-ink px-8 py-4 font-semibold text-bone transition-colors hover:bg-coal"
             >
-              Ver disponibilidade no WhatsApp
+              Reservar pelo WhatsApp
             </ReservarLink>
           </div>
           <div className="lg:col-span-5 lg:col-start-8">
@@ -276,15 +266,72 @@ export default function CabanasPage() {
                 </li>
               ))}
             </ol>
-            <p data-fade className="mt-8 text-sm leading-relaxed text-ink/70">
-              Onde fica: {ADDRESS}.{" "}
-              <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4">
-                Como chegar ↗
-              </a>
-            </p>
+            <p data-fade className="mt-6 font-semibold">A reserva é confirmada com o pagamento.</p>
           </div>
         </div>
       </section>
+
+      {/* 6. PERGUNTAS FREQUENTES */}
+      <section id="perguntas" className="bg-bone text-ink">
+        <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 md:px-8 md:py-28 lg:grid-cols-12">
+          <h2 data-split className="font-display text-5xl font-black uppercase leading-[0.9] md:text-6xl lg:col-span-5">
+            Perguntas frequentes
+          </h2>
+          <div className="border-t border-ink/15 lg:col-span-7">
+            {faq.map((f) => (
+              <details key={f.p} data-fade className="group border-b border-ink/15">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-lg font-semibold">
+                  {f.p}
+                  <span
+                    className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-ink/25 transition-transform group-open:rotate-45"
+                    aria-hidden
+                  >
+                    +
+                  </span>
+                </summary>
+                <p className="pb-6 pr-12 text-lg leading-relaxed text-ink/75">{f.r}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. LOCALIZAÇÃO */}
+      <section id="localizacao" className="bg-ink">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-20 md:px-8 md:py-28 lg:grid-cols-12 lg:items-center">
+          <div className="lg:col-span-4">
+            <p className="eyebrow text-gold">Localização</p>
+            <h2 data-split className="mt-3 font-display text-5xl font-black uppercase leading-[0.9] md:text-6xl">
+              No Glória, em Carazinho
+            </h2>
+            <p data-fade className="mt-6 text-lg leading-relaxed text-bone/80">{ADDRESS}</p>
+            <a
+              href={MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-3 font-semibold underline decoration-gold decoration-2 underline-offset-8 hover:text-gold"
+            >
+              Abrir no Google Maps <span aria-hidden>↗</span>
+            </a>
+          </div>
+          <div className="overflow-hidden rounded-[1.25rem] border border-white/10 lg:col-span-8">
+            <iframe
+              title="Mapa: Clube 1992, Av. Flores da Cunha, 3211, Carazinho"
+              src={MAPA_EMBED}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="block aspect-[4/3] w-full grayscale-[35%] md:aspect-[16/9]"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 8. BOTÃO FIXO NO CELULAR */}
+      <div className="sticky-reservar fixed inset-x-0 bottom-0 z-30 border-t border-white/10 bg-ink/95 p-3 backdrop-blur lg:hidden">
+        <ReservarLink className="block rounded-full bg-gold py-4 text-center font-semibold text-ink">
+          Reservar pelo WhatsApp
+        </ReservarLink>
+      </div>
 
       <HomeMotion sections={SECTIONS} />
     </main>

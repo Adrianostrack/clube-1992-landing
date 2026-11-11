@@ -20,8 +20,12 @@ export type Cabana = {
   photos: string[];
 };
 
-const photos = (n: number, count: number) =>
-  Array.from({ length: count }, (_, i) => `/img/cabanas/c${n}/${i + 1}.webp`);
+// capa = número da foto que abre a galeria (as demais seguem na ordem)
+const photos = (n: number, count: number, capa = 1) => {
+  const ordem = Array.from({ length: count }, (_, i) => i + 1);
+  const resto = ordem.filter((i) => i !== capa);
+  return [capa, ...resto].map((i) => `/img/cabanas/c${n}/${i}.webp`);
+};
 
 // Fotos provisórias das cabanas.
 // Quando chegarem as fotos originais, é só substituir os arquivos em public/img/cabanas/cN/.
@@ -40,7 +44,7 @@ export const cabanas: Cabana[] = [
     style: "Rústica",
     description:
       "Mesmo estilo da Cabana 1, com balcão de madeira maciça e banquetas altas. Boa para quem cozinha.",
-    photos: photos(2, 9),
+    photos: photos(2, 9, 8), // a foto 1 é igual à capa da Cabana 1
   },
   {
     id: "03",

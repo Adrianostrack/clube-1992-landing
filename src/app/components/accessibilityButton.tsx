@@ -46,7 +46,7 @@ export default function AccessibilityButton() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="a11y-btn fixed bottom-6 right-6 z-50">
       <button
         aria-label="Menu de acessibilidade"
         onClick={() => setOpen(!open)}

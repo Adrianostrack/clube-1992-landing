@@ -1,64 +1,56 @@
 "use client";
-import Script from "next/script";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { detectarOrigem } from "./reservarLink";
 
-// Google Analytics 4 / Google Ads (gtag) e Pixel da Meta.
-// Só carregam se os IDs estiverem configurados na Vercel:
-//   NEXT_PUBLIC_GA_ID=G-XXXXXXX (ou AW-XXXXXXX para Google Ads)
-//   NEXT_PUBLIC_META_PIXEL_ID=123456789
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
-const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+// Medição via Google Tag Manager (container GTM-5BJKCQR6, carregado no layout).
+// O GA4 (G-M4LL6N3430) e o Pixel da Meta (925676588403036) ficam configurados DENTRO do GTM.
+// Aqui o site só envia eventos para o dataLayer:
+//   - "whatsapp_click": clique em qualquer link do WhatsApp (com origem, cabana e página)
+//   - "page_change": troca de página sem recarregar
+type DL = { dataLayer?: Record<string, unknown>[] };
 
-type Win = Window & {
-  gtag?: (...args: unknown[]) => void;
-  fbq?: (...args: unknown[]) => void;
+const push = (data: Record<string, unknown>) => {
+  const w = window as Window & DL;
+  w.dataLayer = w.dataLayer || [];
+  w.dataLayer.push(data);
 };
 
 export default function Analytics() {
   const pathname = usePathname();
+  const first = useRef(true);
 
   // Registra a origem da visita (SITE/GADS/IG) já na primeira página
   useEffect(() => {
     detectarOrigem();
   }, []);
 
-  // Navegação entre páginas sem recarregar: avisa o Pixel
   useEffect(() => {
-    (window as Win).fbq?.("track", "PageView");
+    if (first.current) {
+      first.current = false;
+      return;
+    }
+    push({ event: "page_change", page_path: location.pathname });
   }, [pathname]);
 
-  // Cada clique em link do WhatsApp conta como contato / lead
   useEffect(() => {
-    if (!GA_ID && !PIXEL_ID) return;
     const onClick = (e: MouseEvent) => {
       const a = (e.target as HTMLElement | null)?.closest?.("a");
       if (!a || !a.href.includes("wa.me/")) return;
-      const label = (a.textContent || "").trim().slice(0, 80);
-      const w = window as Win;
-      w.gtag?.("event", "generate_lead", { method: "whatsapp", link_text: label, page_path: location.pathname });
-      w.fbq?.("track", "Contact", { content_name: label });
+      const texto = decodeURIComponent(a.href.split("text=")[1] || "");
+      const codigo = texto.match(/Código: ([A-Z]+-[A-Z0-9]+)/)?.[1] ?? "";
+      push({
+        event: "whatsapp_click",
+        whatsapp_codigo: codigo, // ex.: SITE-C3, GADS-GERAL
+        whatsapp_origem: codigo.split("-")[0] || "SITE",
+        whatsapp_cabana: codigo.split("-")[1] || "",
+        link_text: (a.textContent || "").trim().slice(0, 80),
+        page_path: location.pathname,
+      });
     };
     document.addEventListener("click", onClick, { capture: true });
     return () => document.removeEventListener("click", onClick, { capture: true });
   }, []);
 
-  return (
-    <>
-      {GA_ID && (
-        <>
-          <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
-          <Script id="gtag-init" strategy="afterInteractive">
-            {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','${GA_ID}');`}
-          </Script>
-        </>
-      )}
-      {PIXEL_ID && (
-        <Script id="meta-pixel" strategy="afterInteractive">
-          {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${PIXEL_ID}');fbq('track','PageView');`}
-        </Script>
-      )}
-    </>
-  );
+  return null;
 }
