@@ -7,7 +7,7 @@ import { whatsapp } from "../data/club";
 
 const links = [
   { href: "/home#clube", label: "O clube" },
-  { href: "/home#cabanas", label: "Cabanas" },
+  { href: "/cabanas", label: "Cabanas" },
   { href: "/home#estrutura", label: "Estrutura" },
   { href: "/home#futebol", label: "Futebol" },
   { href: "/home#estadio", label: "Estádio" },

@@ -54,7 +54,7 @@ export default function Footer() {
         <div className="lg:col-span-2">
           <p className="eyebrow text-gold">Clube</p>
           <ul className="mt-4 space-y-3 text-sm">
-            <li><Link href="/home#cabanas" className="hover:text-gold">Cabanas</Link></li>
+            <li><Link href="/cabanas" className="hover:text-gold">Cabanas</Link></li>
             <li><Link href="/home#estrutura" className="hover:text-gold">Estrutura</Link></li>
             <li><Link href="/home#futebol" className="hover:text-gold">Futebol</Link></li>
             <li><Link href="/transparency" className="hover:text-gold">Transparência</Link></li>

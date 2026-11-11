@@ -68,6 +68,29 @@ export const cabanas: Cabana[] = [
   },
 ];
 
+// Hospedagem: preencha os campos null quando o clube confirmar.
+// Campos null não aparecem no site.
+export const hospedagem: {
+  precoAPartirDe: number | null; // ex.: 180 -> "a partir de R$ 180 por noite"
+  checkin: string | null; // ex.: "a partir das 14h"
+  checkout: string | null; // ex.: "até as 12h"
+  cancelamento: string | null; // ex.: "grátis até 48h antes da chegada"
+} = {
+  precoAPartirDe: null,
+  checkin: null,
+  checkout: null,
+  cancelamento: null,
+};
+
+// Regras que já constam nos anúncios das cinco cabanas
+export const regrasFixas = [
+  { rotulo: "Hóspedes", valor: "Até 2 pessoas por cabana" },
+  { rotulo: "Animais", valor: "Não são permitidos animais de estimação" },
+];
+
+export const formatPreco = (v: number) =>
+  v.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
+
 export const cabanaAmenities = [
   "Até 2 hóspedes",
   "Cama de casal",

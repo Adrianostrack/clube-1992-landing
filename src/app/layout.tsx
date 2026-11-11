@@ -6,6 +6,7 @@ import Footer from "./components/footer";
 import AccessibilityButton from "./components/accessibilityButton";
 import Preloader from "./components/motion/preloader";
 import SmoothScroll from "./components/motion/smoothScroll";
+import Analytics from "./components/analytics";
 import "lenis/dist/lenis.css";
 
 // Roda antes da pintura: pula o preloader se já foi visto nesta sessão
@@ -54,6 +55,7 @@ export default function RootLayout({
         {children}
         <Footer />
         <AccessibilityButton />
+        <Analytics />
       </body>
     </html>
   );

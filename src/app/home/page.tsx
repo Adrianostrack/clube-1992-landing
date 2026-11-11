@@ -1,5 +1,6 @@
 import Image from "next/image";
-import Cabanas from "../components/cabanas";
+import Link from "next/link";
+import Photo from "../components/photo";
 import HomeMotion from "../components/motion/homeMotion";
 import Diretoria from "../components/diretoria";
 import {
@@ -8,6 +9,7 @@ import {
   ESTADIO_MATERIA_URL,
   alojamentoItens,
   alojamentos,
+  cabanas,
   estadioFatos,
   estadioFotos,
   teamStructure,
@@ -16,36 +18,6 @@ import {
 
 const ASSOCIE = whatsapp("Olá! Quero saber como me associar ao Clube 1992.");
 const VISITA = whatsapp("Olá! Quero agendar o dia grátis para conhecer o Clube 1992.");
-
-function Photo({
-  src,
-  alt,
-  className = "",
-  sizes = "100vw",
-  parallax = false,
-}: {
-  src: string;
-  alt: string;
-  className?: string;
-  sizes?: string;
-  parallax?: boolean;
-}) {
-  return (
-    <div
-      data-reveal
-      data-parallax={parallax || undefined}
-      className={`relative overflow-hidden bg-coal ${className}`}
-    >
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        sizes={sizes}
-        className={`object-cover ${parallax ? "scale-[1.16]" : ""}`}
-      />
-    </div>
-  );
-}
 
 const poolTimes = [
   {
@@ -233,17 +205,61 @@ export default function Home() {
               </h2>
             </div>
             <p data-fade className="text-bone/70 leading-relaxed md:col-span-5">
-              Cinco cabanas no fundo do clube, ao lado das piscinas. Cada uma
-              tem cozinha, banheiro privativo e ar-condicionado. Durante a
-              estadia, você usa a piscina e a academia do 1992.
-              <span className="mt-3 block text-sm text-bone/50">
-                A piscina funciona na temporada de verão.
+              Cinco cabanas para até 2 pessoas, no fundo do clube e ao lado
+              das piscinas. Todas com cozinha, banheiro privativo, Wi‑Fi e
+              ar-condicionado.
+              <span className="mt-4 flex flex-wrap gap-2">
+                <span className="rounded-full border border-gold/60 px-3 py-1 text-sm text-gold">
+                  Piscina inclusa · temporada de verão
+                </span>
+                <span className="rounded-full border border-gold/60 px-3 py-1 text-sm text-gold">
+                  Academia inclusa
+                </span>
               </span>
             </p>
           </div>
 
-          <div className="mt-14">
-            <Cabanas />
+          <div className="mt-14 grid grid-cols-2 gap-3 md:grid-cols-5">
+            {cabanas.map((c, i) => (
+              <Link
+                key={c.id}
+                href={`/cabanas#cabana-${i + 1}`}
+                className={`group relative block ${i === 0 ? "col-span-2 md:col-span-1" : ""}`}
+              >
+                <Photo
+                  src={c.photos[0]}
+                  alt={`${c.name}, estilo ${c.style.toLowerCase()}`}
+                  className="aspect-[4/3] md:aspect-[3/4]"
+                  sizes="(min-width: 768px) 20vw, 50vw"
+                />
+                <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/10 to-transparent" />
+                <span className="pointer-events-none absolute inset-x-0 bottom-0 p-4">
+                  <span className="block font-display text-4xl font-black leading-none">{c.id}</span>
+                  <span className="eyebrow mt-1 block text-bone/70">{c.style}</span>
+                </span>
+                <span className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-ink/70 text-gold transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden>
+                  ↗
+                </span>
+              </Link>
+            ))}
+          </div>
+
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <Link
+              data-magnetic
+              href="/cabanas"
+              className="rounded-full bg-gold px-7 py-4 text-center font-semibold text-ink transition-colors hover:bg-bone"
+            >
+              Fotos, regras e reserva das cabanas
+            </Link>
+            <a
+              href={whatsapp("Olá! Quero reservar uma cabana no Clube 1992.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full border border-bone/40 px-7 py-4 text-center font-semibold transition-colors hover:border-gold hover:text-gold"
+            >
+              Reservar pelo WhatsApp
+            </a>
           </div>
         </div>
       </section>

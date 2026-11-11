@@ -26,7 +26,11 @@ const SECTIONS = [
 
 // Todos os efeitos da home, aplicados por atributos data-* no HTML.
 // Com "reduzir movimento" ligado no sistema, nada disso roda e a página fica estática.
-export default function HomeMotion() {
+export default function HomeMotion({
+  sections = SECTIONS,
+}: {
+  sections?: { id: string; label: string }[];
+}) {
   const [active, setActive] = useState(0);
 
   useGSAP(() => {
@@ -42,6 +46,7 @@ export default function HomeMotion() {
         if (!motion) return;
 
         /* ---------- HERO: entrada + letras que se espalham ao rolar ---------- */
+        if (document.querySelector("[data-hero-title]")) {
         const heroTitle = SplitText.create("[data-hero-title]", {
           type: "chars",
           mask: "chars",
@@ -87,6 +92,7 @@ export default function HomeMotion() {
             0
           )
           .to("[data-hero-copy]", { y: -60, opacity: 0, ease: "none" }, 0);
+        }
 
         /* ---------- FRASE HORIZONTAL com letras em onda ---------- */
         const marquee = document.querySelector<HTMLElement>("[data-marquee]");
@@ -261,7 +267,8 @@ export default function HomeMotion() {
     );
 
     /* ---------- Indicador de seção (sempre ativo, é só navegação) ---------- */
-    SECTIONS.forEach((s, i) => {
+    sections.forEach((s, i) => {
+      if (!document.getElementById(s.id)) return;
       ScrollTrigger.create({
         trigger: `#${s.id}`,
         start: "top center",
@@ -286,7 +293,7 @@ export default function HomeMotion() {
       aria-label="Seções da página"
       className="pointer-events-none fixed bottom-8 left-6 z-30 hidden flex-col gap-2 mix-blend-difference lg:flex"
     >
-      {SECTIONS.map((s, i) => (
+      {sections.map((s, i) => (
         <a
           key={s.id}
           href={`#${s.id}`}
