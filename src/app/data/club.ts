@@ -17,14 +17,13 @@ export type Cabana = {
   name: string;
   style: string;
   description: string;
-  airbnb: string;
   photos: string[];
 };
 
 const photos = (n: number, count: number) =>
   Array.from({ length: count }, (_, i) => `/img/cabanas/c${n}/${i + 1}.webp`);
 
-// Fotos provisórias tiradas dos anúncios do Airbnb.
+// Fotos provisórias das cabanas.
 // Quando chegarem as fotos originais, é só substituir os arquivos em public/img/cabanas/cN/.
 export const cabanas: Cabana[] = [
   {
@@ -33,7 +32,6 @@ export const cabanas: Cabana[] = [
     style: "Rústica",
     description:
       "Parede de barro, madeira e piso claro. Bancada com cozinha e cama de casal de frente para a TV.",
-    airbnb: "https://www.airbnb.com.br/rooms/1639251811334036672",
     photos: photos(1, 7),
   },
   {
@@ -42,7 +40,6 @@ export const cabanas: Cabana[] = [
     style: "Rústica",
     description:
       "Mesmo estilo da Cabana 1, com balcão de madeira maciça e banquetas altas. Boa para quem cozinha.",
-    airbnb: "https://www.airbnb.com.br/rooms/1701671240502954042",
     photos: photos(2, 9),
   },
   {
@@ -51,7 +48,6 @@ export const cabanas: Cabana[] = [
     style: "Clara",
     description:
       "Paredes brancas e madeira natural, bancada em L e cortinas blackout. Entrada própria pelo pátio.",
-    airbnb: "https://www.airbnb.com.br/rooms/1745744469591527508",
     photos: photos(3, 6),
   },
   {
@@ -60,7 +56,6 @@ export const cabanas: Cabana[] = [
     style: "Clara",
     description:
       "A mais espaçosa das claras: cama de casal, cozinha americana e banheiro com box de vidro.",
-    airbnb: "https://www.airbnb.com.br/rooms/1701676860178785619",
     photos: photos(4, 6),
   },
   {
@@ -69,7 +64,6 @@ export const cabanas: Cabana[] = [
     style: "Madeira",
     description:
       "Toda em madeira escura, com mesa de jantar, luz quente e janelas de casa de campo.",
-    airbnb: "https://www.airbnb.com.br/rooms/1701568640311669004",
     photos: photos(5, 9),
   },
 ];
@@ -149,4 +143,23 @@ export const mandato = {
 export const diretoria: { cargo: string; nome: string }[] = [
   { cargo: "Presidente", nome: "André Bordin" },
   { cargo: "1ª Secretária", nome: "Bruna Andreia Barros Gehrke" },
+];
+
+// Estádio: dados da matéria do Peleia FC (01/12/2023).
+// Imagens são do projeto (renders) e da terraplanagem do terreno.
+export const ESTADIO_MATERIA_URL =
+  "https://www.peleiafc.com/post/exclusivo-1992-ir%C3%A1-construir-est%C3%A1dio-define-%C3%A1rea-e-busca-investidores";
+
+export const estadioFatos = [
+  { valor: "4 mil", rotulo: "lugares" },
+  { valor: "38", rotulo: "camarotes" },
+  { valor: "FIFA", rotulo: "medidas oficiais do campo sintético" },
+  { valor: "ERS-142", rotulo: "km 5, entre Carazinho e Não-Me-Toque" },
+];
+
+export const estadioFotos = [
+  { src: "/img/estadio/fachada.webp", alt: "Render da fachada do Estádio Orides Bordin com o letreiro 1992", legenda: "Acesso principal" },
+  { src: "/img/estadio/hall.webp", alt: "Render do hall de acesso às arquibancadas", legenda: "Hall das arquibancadas" },
+  { src: "/img/estadio/camarote.webp", alt: "Render de um camarote com sofás e vista para o campo", legenda: "Camarote" },
+  { src: "/img/estadio/terraplanagem.webp", alt: "Foto aérea da terraplanagem do terreno do estádio", legenda: "Terraplanagem do terreno" },
 ];

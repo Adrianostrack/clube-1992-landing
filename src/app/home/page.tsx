@@ -5,8 +5,11 @@ import Diretoria from "../components/diretoria";
 import {
   CBF_URL,
   FGF_URL,
+  ESTADIO_MATERIA_URL,
   alojamentoItens,
   alojamentos,
+  estadioFatos,
+  estadioFotos,
   teamStructure,
   whatsapp,
 } from "../data/club";
@@ -475,15 +478,96 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ESTÁDIO */}
+      <section id="estadio" data-card className="relative z-[4] -mt-10 overflow-hidden rounded-t-[2rem] bg-coal md:-mt-14 md:rounded-t-[3rem]">
+        <div className="mx-auto max-w-7xl px-5 pt-20 md:px-8 md:pt-28">
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-7">
+              <p className="eyebrow text-gold">Projeto · Estádio Orides Bordin</p>
+              <h2 data-split className="mt-3 font-display text-6xl font-black uppercase leading-[0.88] md:text-8xl">
+                O próximo passo é a nossa casa.
+              </h2>
+            </div>
+            <p data-fade className="leading-relaxed text-bone/75 lg:col-span-5">
+              O 1992 vai construir o próprio estádio na ERS-142, a 5 km do
+              trevo do Avião de Carazinho e a 10 minutos de Não-Me-Toque.
+              Multiuso, para jogos e grandes eventos, com estacionamento na
+              frente e iluminação de padrão internacional. A terraplanagem do
+              terreno já começou.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-14">
+          <Photo
+            src="/img/estadio/arquibancada.webp"
+            alt="Render da arquibancada do Estádio Orides Bordin com o 1992 desenhado nas cadeiras e o gramado em primeiro plano"
+            className="aspect-[16/9] md:aspect-[1280/388]"
+            sizes="100vw"
+            parallax
+          />
+        </div>
+
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <dl className="grid grid-cols-2 border-b border-white/10 md:grid-cols-4">
+            {estadioFatos.map((f) => (
+              <div key={f.rotulo} data-fade className="border-t border-white/10 py-8 pr-4 md:border-t-0">
+                <dd className="font-display text-5xl font-black leading-none md:text-6xl">{f.valor}</dd>
+                <dt className="mt-2 text-sm text-bone/60">{f.rotulo}</dt>
+              </div>
+            ))}
+          </dl>
+
+          <div className="mt-12 grid grid-cols-2 gap-3 md:grid-cols-4">
+            {estadioFotos.map((f) => (
+              <figure key={f.src}>
+                <Photo src={f.src} alt={f.alt} className="aspect-square" sizes="(min-width: 768px) 25vw, 50vw" />
+                <figcaption className="eyebrow mt-3 text-bone/50">{f.legenda}</figcaption>
+              </figure>
+            ))}
+          </div>
+
+          <div className="grid gap-8 py-20 md:grid-cols-12 md:items-center">
+            <div className="md:col-span-7">
+              <h3 className="font-display text-4xl font-black uppercase leading-none md:text-5xl">
+                Sua empresa pode construir junto.
+              </h3>
+              <p data-fade className="mt-4 max-w-xl leading-relaxed text-bone/75">
+                O projeto está vinculado ao governo: empresas e empresários que
+                apoiam a obra podem abater o valor no Imposto de Renda e no ICMS.
+              </p>
+              <p className="mt-6 text-xs text-bone/40">
+                Imagens ilustrativas do projeto. Informações divulgadas pelo{" "}
+                <a href={ESTADIO_MATERIA_URL} target="_blank" rel="noopener noreferrer" className="underline hover:text-gold">
+                  Peleia FC
+                </a>{" "}
+                em dezembro de 2023.
+              </p>
+            </div>
+            <div className="md:col-span-5 md:text-right">
+              <a
+                data-magnetic
+                href={whatsapp("Olá! Tenho interesse em apoiar a construção do Estádio Orides Bordin.")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block rounded-full bg-gold px-8 py-4 text-center font-semibold text-ink transition-colors hover:bg-bone"
+              >
+                Quero apoiar o estádio
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* DIRETORIA */}
-      <section id="diretoria" data-card className="relative z-[4] -mt-10 rounded-t-[2rem] bg-bone text-ink md:-mt-14 md:rounded-t-[3rem]">
+      <section id="diretoria" data-card className="relative z-[5] -mt-10 rounded-t-[2rem] bg-bone text-ink md:-mt-14 md:rounded-t-[3rem]">
         <div className="mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28">
           <Diretoria tone="light" />
         </div>
       </section>
 
       {/* ASSOCIE-SE */}
-      <section id="associe" data-card className="relative z-[5] -mt-10 rounded-t-[2rem] bg-gold text-ink md:-mt-14 md:rounded-t-[3rem]">
+      <section id="associe" data-card className="relative z-[6] -mt-10 rounded-t-[2rem] bg-gold text-ink md:-mt-14 md:rounded-t-[3rem]">
         <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 md:px-8 md:py-28 lg:grid-cols-12">
           <div className="lg:col-span-6">
             <p className="eyebrow text-ink/60">Seja sócio</p>

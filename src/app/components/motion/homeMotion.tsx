@@ -19,6 +19,7 @@ const SECTIONS = [
   { id: "cabanas", label: "Cabanas" },
   { id: "estrutura", label: "Clube social" },
   { id: "futebol", label: "Futebol" },
+  { id: "estadio", label: "Estádio" },
   { id: "diretoria", label: "Diretoria" },
   { id: "associe", label: "Seja sócio" },
 ];

@@ -170,21 +170,16 @@ export default function Cabanas() {
 
           <div className="mt-8 flex flex-col gap-3 lg:mt-auto">
             <a
-              href={cabana.airbnb}
+              href={whatsapp(`Olá! Quero reservar a ${cabana.name} no Clube 1992.`)}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-full bg-gold py-4 text-center font-semibold text-ink hover:bg-bone transition-colors"
             >
-              Ver datas e reservar no Airbnb
+              Reservar pelo WhatsApp
             </a>
-            <a
-              href={whatsapp(`Olá! Quero reservar a ${cabana.name} no Clube 1992.`)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full border border-white/20 py-4 text-center font-semibold hover:border-gold hover:text-gold transition-colors"
-            >
-              Falar pelo WhatsApp
-            </a>
+            <p className="text-center text-xs text-bone/50">
+              Consulte datas e valores direto com o clube.
+            </p>
           </div>
         </div>
       </div>
