@@ -11,6 +11,7 @@ import {
   alojamentos,
   FRASE_BASE,
   cabanas,
+  diariaPiscina,
   formatPreco,
   hospedagem,
   estadioFatos,
@@ -161,7 +162,12 @@ export default function Home() {
               </div>
               <div>
                 <dt className="eyebrow text-ink/50">Piscina</dt>
-                <dd className="mt-2 text-sm leading-snug">Liberada para hóspedes de novembro a março</dd>
+                <dd className="mt-2 text-sm leading-snug">
+                  Hóspedes usam sem custo. Diária avulsa a partir de {formatPreco(diariaPiscina.crianca)}.{" "}
+                  <a href="#piscina" className="underline decoration-gold decoration-2 underline-offset-4 hover:text-gold-dark">
+                    Ver
+                  </a>
+                </dd>
               </div>
               <div>
                 <dt className="eyebrow text-ink/50">Academia</dt>
@@ -283,7 +289,7 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="mt-14 grid gap-6 md:grid-cols-12 md:items-end">
+          <div id="piscina" className="mt-14 grid scroll-mt-24 gap-6 md:grid-cols-12 md:items-end">
             <div className="flex gap-4 md:col-span-5">
               <span className="font-display text-xl font-black text-gold-dark">01</span>
               <div>
@@ -293,6 +299,31 @@ export default function Home() {
                   lado e o 1992 desenhado no fundo. Aberta de novembro a março.
                 </p>
               </div>
+            </div>
+
+            {/* Diária da piscina para quem não é sócio */}
+            <div className="rounded-3xl bg-ink p-6 text-bone md:col-span-6 md:col-start-7 md:p-8">
+              <p className="eyebrow text-gold">Não é sócio? Venha passar o dia</p>
+              <dl className="mt-4 grid grid-cols-2 gap-4 border-b border-bone/15 pb-5">
+                <div>
+                  <dt className="text-sm text-bone/60">Adulto</dt>
+                  <dd className="font-display text-5xl font-black leading-none">{formatPreco(diariaPiscina.adulto)}</dd>
+                </div>
+                <div>
+                  <dt className="text-sm text-bone/60">Criança até {diariaPiscina.idadeCrianca} anos</dt>
+                  <dd className="font-display text-5xl font-black leading-none">{formatPreco(diariaPiscina.crianca)}</dd>
+                </div>
+              </dl>
+              <p className="mt-4 text-sm leading-relaxed text-bone/70">
+                Diária por pessoa, de novembro a março. Das 9h às 12h30 e das 13h30 às 18h30.
+              </p>
+              <ReservarLink
+                piscina
+                magnetic
+                className="mt-6 block rounded-full bg-gold px-7 py-4 text-center font-semibold text-ink transition-colors hover:bg-bone"
+              >
+                Garantir a diária no WhatsApp
+              </ReservarLink>
             </div>
           </div>
           <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { type Origem, mensagemReserva, whatsapp } from "../data/club";
+import { type Origem, mensagemPiscina, mensagemReserva, whatsapp } from "../data/club";
 
 const KEY = "c1992-origem";
 
@@ -31,11 +31,13 @@ export function useOrigem(): Origem {
 // Botão/link de reserva com a mensagem padrão e o código de origem
 export default function ReservarLink({
   cabana,
+  piscina,
   className,
   children,
   magnetic,
 }: {
   cabana?: number;
+  piscina?: boolean; // diária da piscina (day use) em vez de cabana
   className?: string;
   children: React.ReactNode;
   magnetic?: boolean;
@@ -44,7 +46,7 @@ export default function ReservarLink({
   return (
     <a
       data-magnetic={magnetic || undefined}
-      href={whatsapp(mensagemReserva(origem, cabana))}
+      href={whatsapp(piscina ? mensagemPiscina(origem) : mensagemReserva(origem, cabana))}
       target="_blank"
       rel="noopener noreferrer"
       className={className}

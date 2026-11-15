@@ -1,7 +1,7 @@
 // Conteúdo do site num lugar só. Para trocar fotos ou links, edite aqui.
 
-export const WHATSAPP_NUMBER = "555496518434";
-export const WHATSAPP_DISPLAY = "(54) 9651-8434";
+export const WHATSAPP_NUMBER = "5554984487198";
+export const WHATSAPP_DISPLAY = "(54) 98448-7198";
 export const EMAIL = "atendimento@clube1992.com.br";
 export const ADDRESS = "Av. Flores da Cunha, 3211 · Glória · Carazinho/RS";
 export const MAPS_URL =
@@ -123,6 +123,16 @@ export const mensagemReserva = (origem: Origem, cabana?: number) =>
   cabana
     ? `Olá! Quero reservar a Cabana ${cabana}. Código: ${origem}-C${cabana}`
     : `Olá! Quero saber qual cabana está disponível. Código: ${origem}-GERAL`;
+
+// Piscina para quem não é sócio (day use). Mesmos horários da temporada.
+export const diariaPiscina = {
+  adulto: 40,
+  crianca: 20, // até 12 anos
+  idadeCrianca: 12,
+};
+
+export const mensagemPiscina = (origem: Origem) =>
+  `Olá! Quero a diária da piscina do Clube 1992. Código: ${origem}-PISCINA`;
 
 export const formatPreco = (v: number) =>
   v.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
