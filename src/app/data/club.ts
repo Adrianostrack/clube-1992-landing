@@ -7,6 +7,13 @@ export const ADDRESS = "Av. Flores da Cunha, 3211 · Glória · Carazinho/RS";
 export const MAPS_URL =
   "https://www.google.com/maps/search/?api=1&query=Clube+1992+Av.+Flores+da+Cunha+3211+Carazinho+RS";
 
+// Dados da entidade (aparecem no rodapé e nas páginas de privacidade e termos).
+// Enquanto estiverem vazios, o rodapé não mostra a linha do CNPJ.
+export const RAZAO_SOCIAL = "1992 CLUBE";
+export const CNPJ = "36.705.767/0001-63";
+export const NOME_ENTIDADE = RAZAO_SOCIAL || "Clube 1992";
+export const POLITICAS_ATUALIZADAS_EM = "24 de novembro de 2026";
+
 export const whatsapp = (message?: string) =>
   `https://wa.me/${WHATSAPP_NUMBER}${
     message ? `?text=${encodeURIComponent(message)}` : ""

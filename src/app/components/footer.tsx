@@ -3,7 +3,9 @@ import Link from "next/link";
 import { entidades } from "./filiacoes";
 import {
   ADDRESS,
+  CNPJ,
   EMAIL,
+  RAZAO_SOCIAL,
   MAPS_URL,
   WHATSAPP_DISPLAY,
   whatsapp,
@@ -83,9 +85,16 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <p className="mx-auto max-w-7xl px-5 py-6 text-xs text-bone/40 md:px-8">
-          Clube 1992 © {new Date().getFullYear()}. Todos os direitos reservados.
-        </p>
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-5 py-6 text-xs text-bone/40 md:flex-row md:items-center md:justify-between md:px-8">
+          <p>
+            {RAZAO_SOCIAL || "Clube 1992"}
+            {CNPJ && <> · CNPJ {CNPJ}</>} © {new Date().getFullYear()}. Todos os direitos reservados.
+          </p>
+          <nav className="flex gap-5">
+            <Link href="/privacidade" className="hover:text-gold">Política de Privacidade</Link>
+            <Link href="/termos" className="hover:text-gold">Termos de Uso</Link>
+          </nav>
+        </div>
       </div>
     </footer>
   );
